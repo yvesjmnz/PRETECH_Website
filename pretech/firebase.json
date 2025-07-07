@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "pretech-website-3bdf0",
+          "appId": "1:608119249238:android:293bcff04461276014def7",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "pretech-website-3bdf0",
+          "configurations": {
+            "android": "1:608119249238:android:293bcff04461276014def7",
+            "ios": "1:608119249238:ios:a0e82c774b3457be14def7",
+            "macos": "1:608119249238:ios:a0e82c774b3457be14def7",
+            "web": "1:608119249238:web:171ad85f71030ec214def7",
+            "windows": "1:608119249238:web:552bf8ec86df158e14def7"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
