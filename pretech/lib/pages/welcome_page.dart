@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
+import '../data/content_registry.dart';
 
+/// Generic welcome page following Open/Closed Principle
+/// Single Responsibility: Welcome users and navigate to available learning resources
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -28,7 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
     });
 
     // Show button after content is visible
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (mounted) {
         setState(() {
           _showButton = true;
@@ -37,257 +41,206 @@ class _WelcomePageState extends State<WelcomePage> {
     });
   }
 
-  void _navigateToMain() {
-    Navigator.of(context).pushReplacementNamed('/main');
+  void _navigateToResources() {
+    // Navigate to primary resource (currently concept map)
+    // Future: Could show resource selection if multiple resources available
+    final primaryResource = ContentRegistry.primaryResource;
+    Navigator.of(context).pushReplacementNamed(primaryResource.route);
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < 480;
-    final isTablet = screenWidth >= 480 && screenWidth < 1024;
-    final isDesktop = screenWidth >= 1024;
+    final isMobile = screenWidth < 600;
+    final availableResources = ContentRegistry.availableResources;
     
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF00BFAE), Color(0xFF4DD0E1)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+        decoration: BoxDecoration(
+          gradient: AppTheme.pageColorSchemes[0].gradient,
         ),
         child: SafeArea(
-          child: isDesktop 
-            ? Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Padding(
-                    padding: const EdgeInsets.all(40.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildContent(isMobile, isTablet, isDesktop),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: Padding(
+                padding: EdgeInsets.all(isMobile ? AppTheme.spacingL : AppTheme.spacingXxl),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Logo/Icon
+                    AnimatedOpacity(
+                      opacity: _showContent ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 800),
+                      child: Container(
+                        padding: const EdgeInsets.all(AppTheme.spacingL),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+                        ),
+                        child: Icon(
+                          Icons.school,
+                          size: isMobile ? 60 : 80,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-            : SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: screenHeight - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 16.0 : 32.0,
-                      vertical: 20.0,
+                    
+                    SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                    
+                    // Generic Welcome Title
+                    AnimatedOpacity(
+                      opacity: _showContent ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 1000),
+                      child: Text(
+                        'Welcome to Group 1 PRETECH L81\'s Learning Resource Site!',
+                        style: (isMobile 
+                          ? AppTheme.headlineMedium 
+                          : AppTheme.headlineLarge
+                        ).copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildContent(isMobile, isTablet, isDesktop),
+                    
+                    const SizedBox(height: AppTheme.spacingM),
+                    
+                    // Generic Subtitle
+                    AnimatedOpacity(
+                      opacity: _showContent ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 1200),
+                      child: Text(
+                        'Explore our interactive learning resources designed to enhance your understanding of health and wellness topics.',
+                        style: AppTheme.bodyLarge.copyWith(
+                          color: Colors.white.withOpacity(0.9),
+                          fontSize: isMobile ? 16 : 18,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
+                    
+                    SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                    
+                    // Available Resources Section
+                    AnimatedOpacity(
+                      opacity: _showContent ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 1400),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Available Learning Resources',
+                            style: AppTheme.titleLarge.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: AppTheme.spacingL),
+                          
+                          // Resource Cards
+                          Wrap(
+                            spacing: AppTheme.spacingM,
+                            runSpacing: AppTheme.spacingM,
+                            alignment: WrapAlignment.center,
+                            children: availableResources.map((resource) => 
+                              _buildResourceCard(resource, isMobile)
+                            ).toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                    
+                    // Get Started Button
+                    AnimatedOpacity(
+                      opacity: _showButton ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 600),
+                      child: AnimatedScale(
+                        scale: _showButton ? 1.0 : 0.8,
+                        duration: const Duration(milliseconds: 600),
+                        child: SizedBox(
+                          width: isMobile ? double.infinity : null,
+                          child: ElevatedButton(
+                            onPressed: _navigateToResources,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: AppTheme.pageColorSchemes[0].primary,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: isMobile ? AppTheme.spacingXl : 40,
+                                vertical: AppTheme.spacingM,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+                              ),
+                              elevation: AppTheme.elevationL,
+                            ),
+                            child: Row(
+                              mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  ContentRegistry.hasMultipleResources 
+                                    ? 'Explore Resources' 
+                                    : 'Start Learning',
+                                  style: AppTheme.titleMedium.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: AppTheme.spacingS),
+                                const Icon(Icons.arrow_forward),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+            ),
+          ),
         ),
       ),
     );
   }
-
-  List<Widget> _buildContent(bool isMobile, bool isTablet, bool isDesktop) {
-    return [
-      // Logo/Icon
-      AnimatedOpacity(
-        opacity: _showContent ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 800),
-        child: Container(
-          padding: EdgeInsets.all(isMobile ? 16 : 20),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Icon(
-            Icons.favorite,
-            size: isMobile ? 60 : (isTablet ? 70 : 80),
-            color: Colors.white,
-          ),
-        ),
-      ),
-      
-      SizedBox(height: isMobile ? 24 : (isTablet ? 32 : 40)),
-      
-      // Title
-      AnimatedOpacity(
-        opacity: _showContent ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 1000),
-        child: Text(
-          'Weight Management 101',
-          style: TextStyle(
-            fontSize: isMobile ? 24 : (isTablet ? 28 : 36),
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            letterSpacing: 1.2,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      
-      SizedBox(height: isMobile ? 12 : 16),
-      
-      // Subtitle
-      AnimatedOpacity(
-        opacity: _showContent ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 1200),
-        child: Text(
-          'A fun website to healthy living\nfor Grade 10 students!',
-          style: TextStyle(
-            fontSize: isMobile ? 16 : (isTablet ? 18 : 20),
-            color: Colors.white70,
-            fontWeight: FontWeight.w500,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      
-      SizedBox(height: isMobile ? 32 : (isTablet ? 48 : 60)),
-      
-      // Feature Cards
-      AnimatedOpacity(
-        opacity: _showContent ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 1400),
-        child: Wrap(
-          spacing: isMobile ? 12 : 20,
-          runSpacing: isMobile ? 12 : 20,
-          alignment: WrapAlignment.center,
-          children: [
-            _buildFeatureCard(
-              icon: Icons.hub,
-              title: 'Interactive\nConcept Map',
-              color: Colors.white.withOpacity(0.9),
-              isMobile: isMobile,
-              isTablet: isTablet,
-              isDesktop: isDesktop,
-            ),
-            _buildFeatureCard(
-              icon: Icons.restaurant_menu,
-              title: 'Nutritional\nHabits',
-              color: Colors.white.withOpacity(0.9),
-              isMobile: isMobile,
-              isTablet: isTablet,
-              isDesktop: isDesktop,
-            ),
-            _buildFeatureCard(
-              icon: Icons.fitness_center,
-              title: 'Physical\nActivities',
-              color: Colors.white.withOpacity(0.9),
-              isMobile: isMobile,
-              isTablet: isTablet,
-              isDesktop: isDesktop,
-            ),
-            _buildFeatureCard(
-              icon: Icons.health_and_safety,
-              title: 'Health\nBenefits',
-              color: Colors.white.withOpacity(0.9),
-              isMobile: isMobile,
-              isTablet: isTablet,
-              isDesktop: isDesktop,
-            ),
-          ],
-        ),
-      ),
-      
-      SizedBox(height: isMobile ? 40 : (isTablet ? 50 : 60)),
-      
-      // Get Started Button
-      AnimatedOpacity(
-        opacity: _showButton ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 600),
-        child: AnimatedScale(
-          scale: _showButton ? 1.0 : 0.8,
-          duration: const Duration(milliseconds: 600),
-          child: SizedBox(
-            width: isMobile ? double.infinity : null,
-            child: ElevatedButton(
-              onPressed: _navigateToMain,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF00BFAE),
-                padding: EdgeInsets.symmetric(
-                  horizontal: isMobile ? 32 : (isTablet ? 36 : 40),
-                  vertical: isMobile ? 14 : (isTablet ? 15 : 16),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                elevation: 8,
-              ),
-              child: Row(
-                mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Get Started',
-                    style: TextStyle(
-                      fontSize: isMobile ? 16 : (isTablet ? 17 : 18),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.arrow_forward),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      
-      SizedBox(height: isMobile ? 20 : 40),
-    ];
-  }
-
-  Widget _buildFeatureCard({
-    required IconData icon,
-    required String title,
-    required Color color,
-    required bool isMobile,
-    required bool isTablet,
-    required bool isDesktop,
-  }) {
-    double cardWidth = isMobile ? 100 : (isTablet ? 130 : 140);
-    double cardHeight = isMobile ? 85 : (isTablet ? 110 : 120);
-    double iconSize = isMobile ? 28 : (isTablet ? 36 : 40);
-    double fontSize = isMobile ? 10 : (isTablet ? 12 : 14);
-    
+  
+  Widget _buildResourceCard(LearningResource resource, bool isMobile) {
     return Container(
-      width: cardWidth,
-      height: cardHeight,
-      padding: EdgeInsets.all(isMobile ? 10 : (isTablet ? 12 : 14)),
+      width: isMobile ? double.infinity : 300,
+      padding: const EdgeInsets.all(AppTheme.spacingL),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.3),
+          width: 1,
+        ),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            icon,
-            size: iconSize,
-            color: const Color(0xFF00BFAE),
+            resource.icon,
+            size: isMobile ? 40 : 48,
+            color: Colors.white,
           ),
-          SizedBox(height: isMobile ? 6 : 8),
+          const SizedBox(height: AppTheme.spacingM),
           Text(
-            title,
-            style: TextStyle(
-              fontSize: fontSize,
+            resource.title,
+            style: AppTheme.titleLarge.copyWith(
+              color: Colors.white,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF00BFAE),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppTheme.spacingS),
+          Text(
+            resource.description,
+            style: AppTheme.bodyMedium.copyWith(
+              color: Colors.white.withOpacity(0.8),
             ),
             textAlign: TextAlign.center,
           ),
