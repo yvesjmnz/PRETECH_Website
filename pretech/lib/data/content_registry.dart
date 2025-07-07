@@ -11,6 +11,13 @@ class ContentRegistry {
       icon: Icons.hub,
       route: '/concept-map',
     ),
+    LearningResource(
+      id: 'lecture-quiz',
+      title: 'Weight Management Lecture & Quiz',
+      description: 'Interactive presentation with engaging activities and knowledge checks',
+      icon: Icons.school,
+      route: '/lecture',
+    ),
     // Future resources can be added here without modifying existing code
   ];
   

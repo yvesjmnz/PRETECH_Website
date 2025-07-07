@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 /// Professional header component following Material Design 3
-/// Single Responsibility: Display page header with consistent styling
+/// Single Responsibility: Display page header with consistent styling and navigation
 class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final IconData icon;
   final PageColorScheme colorScheme;
+  final bool showMenuButton;
+  final String? currentRoute;
   
   const CustomHeader({
     super.key, 
     required this.title,
     required this.icon,
     required this.colorScheme,
+    this.showMenuButton = true,
+    this.currentRoute,
   });
 
   @override
@@ -36,16 +40,30 @@ class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: isMobile ? AppTheme.spacingM : AppTheme.spacingL,
-                vertical: AppTheme.spacingS, // Reduced padding to prevent overflow
+                vertical: AppTheme.spacingS,
               ),
               child: Row(
                 children: [
+                  // Menu button
+                  if (showMenuButton)
+                    Builder(
+                      builder: (context) => IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                        tooltip: 'Open navigation menu',
+                      ),
+                    ),
+                  
                   // Icon container
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     child: Container(
                       key: ValueKey(icon),
-                      padding: const EdgeInsets.all(AppTheme.spacingS), // Reduced padding
+                      padding: const EdgeInsets.all(AppTheme.spacingS),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(AppTheme.radiusS),
@@ -56,7 +74,7 @@ class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       child: Icon(
                         icon,
-                        size: 24, // Fixed size to prevent overflow
+                        size: 20,
                         color: Colors.white,
                       ),
                     ),
@@ -64,19 +82,19 @@ class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
                   
                   const SizedBox(width: AppTheme.spacingM),
                   
-                  // Title section - using Flexible instead of Expanded to prevent overflow
-                  Flexible(
+                  // Title section
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
                           child: Text(
                             title,
                             key: ValueKey(title),
-                            style: AppTheme.titleMedium.copyWith( // Consistent smaller font size
+                            style: AppTheme.titleMedium.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: isMobile ? 16 : 18,
@@ -85,11 +103,31 @@ class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
                             maxLines: 1,
                           ),
                         ),
-                        // Removed subtitle to prevent overflow - following YAGNI principle
-                        // Only show essential information in header
+                        if (!isMobile) ...[
+                          const SizedBox(height: AppTheme.spacingXs),
+                          Text(
+                            'PRETECH L81 Learning Resources',
+                            style: AppTheme.bodyMedium.copyWith(
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
+                  
+                  // Home button
+                  if (currentRoute != '/')
+                    IconButton(
+                      icon: const Icon(
+                        Icons.home,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+                      tooltip: 'Go to home',
+                    ),
                 ],
               ),
             ),
@@ -100,5 +138,5 @@ class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(64); // Reduced height to match content
+  Size get preferredSize => const Size.fromHeight(64);
 }

@@ -139,7 +139,7 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
                   ),
                 ),
                 Text(
-                  'Explore weight management concepts',
+                  'Our weight management 101 learning resources are all grounded on this concept map!',
                   style: TextStyle(
                     fontSize: isMobile ? 12 : 14,
                     color: Colors.grey[600],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../data/content_registry.dart';
+import '../widgets/navigation/global_drawer.dart';
 
 /// Generic welcome page following Open/Closed Principle
 /// Single Responsibility: Welcome users and navigate to available learning resources
@@ -55,152 +56,184 @@ class _WelcomePageState extends State<WelcomePage> {
     final availableResources = ContentRegistry.availableResources;
     
     return Scaffold(
+      drawer: const GlobalDrawer(currentRoute: '/'),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.pageColorSchemes[0].gradient,
         ),
         child: SafeArea(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 800),
-              child: Padding(
-                padding: EdgeInsets.all(isMobile ? AppTheme.spacingL : AppTheme.spacingXxl),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Logo/Icon
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 800),
-                      child: Container(
-                        padding: const EdgeInsets.all(AppTheme.spacingL),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(AppTheme.radiusXl),
-                        ),
-                        child: Icon(
-                          Icons.school,
-                          size: isMobile ? 60 : 80,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    
-                    SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
-                    
-                    // Generic Welcome Title
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 1000),
-                      child: Text(
-                        'Welcome to Group 1 PRETECH L81\'s Learning Resource Site!',
-                        style: (isMobile 
-                          ? AppTheme.headlineMedium 
-                          : AppTheme.headlineLarge
-                        ).copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    
-                    const SizedBox(height: AppTheme.spacingM),
-                    
-                    // Generic Subtitle
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 1200),
-                      child: Text(
-                        'Explore our interactive learning resources designed to enhance your understanding of health and wellness topics.',
-                        style: AppTheme.bodyLarge.copyWith(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: isMobile ? 16 : 18,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    
-                    SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
-                    
-                    // Available Resources Section
-                    AnimatedOpacity(
-                      opacity: _showContent ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 1400),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Available Learning Resources',
-                            style: AppTheme.titleLarge.copyWith(
+          child: Stack(
+            children: [
+              // Main content
+              Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: Padding(
+                    padding: EdgeInsets.all(isMobile ? AppTheme.spacingL : AppTheme.spacingXxl),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Logo/Icon
+                        AnimatedOpacity(
+                          opacity: _showContent ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 800),
+                          child: Container(
+                            padding: const EdgeInsets.all(AppTheme.spacingL),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+                            ),
+                            child: Icon(
+                              Icons.school,
+                              size: isMobile ? 60 : 80,
                               color: Colors.white,
-                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        
+                        SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                        
+                        // Generic Welcome Title
+                        AnimatedOpacity(
+                          opacity: _showContent ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1000),
+                          child: Text(
+                            'Welcome to Group 1 PRETECH L81\'s Learning Resource Site!',
+                            style: (isMobile 
+                              ? AppTheme.headlineMedium 
+                              : AppTheme.headlineLarge
+                            ).copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: AppTheme.spacingL),
-                          
-                          // Resource Cards
-                          Wrap(
-                            spacing: AppTheme.spacingM,
-                            runSpacing: AppTheme.spacingM,
-                            alignment: WrapAlignment.center,
-                            children: availableResources.map((resource) => 
-                              _buildResourceCard(resource, isMobile)
-                            ).toList(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    
-                    SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
-                    
-                    // Get Started Button
-                    AnimatedOpacity(
-                      opacity: _showButton ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 600),
-                      child: AnimatedScale(
-                        scale: _showButton ? 1.0 : 0.8,
-                        duration: const Duration(milliseconds: 600),
-                        child: SizedBox(
-                          width: isMobile ? double.infinity : null,
-                          child: ElevatedButton(
-                            onPressed: _navigateToResources,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: AppTheme.pageColorSchemes[0].primary,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: isMobile ? AppTheme.spacingXl : 40,
-                                vertical: AppTheme.spacingM,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(AppTheme.radiusXl),
-                              ),
-                              elevation: AppTheme.elevationL,
+                        ),
+                        
+                        const SizedBox(height: AppTheme.spacingM),
+                        
+                        // Generic Subtitle
+                        AnimatedOpacity(
+                          opacity: _showContent ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1200),
+                          child: Text(
+                            'Explore our interactive learning resources designed to help improve your weight management lesson plan!',
+                            style: AppTheme.bodyLarge.copyWith(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: isMobile ? 16 : 18,
                             ),
-                            child: Row(
-                              mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ContentRegistry.hasMultipleResources 
-                                    ? 'Explore Resources' 
-                                    : 'Start Learning',
-                                  style: AppTheme.titleMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        
+                        SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                        
+                        // Available Resources Section
+                        AnimatedOpacity(
+                          opacity: _showContent ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1400),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Available Learning Resources',
+                                style: AppTheme.titleLarge.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                const SizedBox(width: AppTheme.spacingS),
-                                const Icon(Icons.arrow_forward),
-                              ],
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: AppTheme.spacingL),
+                              
+                              // Resource Cards
+                              Wrap(
+                                spacing: AppTheme.spacingM,
+                                runSpacing: AppTheme.spacingM,
+                                alignment: WrapAlignment.center,
+                                children: availableResources.map((resource) => 
+                                  _buildResourceCard(resource, isMobile)
+                                ).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        
+                        SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                        
+                        // Get Started Button
+                        AnimatedOpacity(
+                          opacity: _showButton ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 600),
+                          child: AnimatedScale(
+                            scale: _showButton ? 1.0 : 0.8,
+                            duration: const Duration(milliseconds: 600),
+                            child: SizedBox(
+                              width: isMobile ? double.infinity : null,
+                              child: ElevatedButton(
+                                onPressed: _navigateToResources,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: AppTheme.pageColorSchemes[0].primary,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: isMobile ? AppTheme.spacingXl : 40,
+                                    vertical: AppTheme.spacingM,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+                                  ),
+                                  elevation: AppTheme.elevationL,
+                                ),
+                                child: Row(
+                                  mainAxisSize: isMobile ? MainAxisSize.max : MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      ContentRegistry.hasMultipleResources 
+                                        ? 'Explore Resources' 
+                                        : 'Start Learning',
+                                      style: AppTheme.titleMedium.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: AppTheme.spacingS),
+                                    const Icon(Icons.arrow_forward),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              
+              // Menu button in top-left
+              Positioned(
+                top: AppTheme.spacingM,
+                left: AppTheme.spacingM,
+                child: SafeArea(
+                  child: Builder(
+                    builder: (context) => IconButton(
+                      icon: Container(
+                        padding: const EdgeInsets.all(AppTheme.spacingS),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(AppTheme.radiusS),
+                        ),
+                        child: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                      tooltip: 'Open navigation menu',
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -208,43 +241,50 @@ class _WelcomePageState extends State<WelcomePage> {
   }
   
   Widget _buildResourceCard(LearningResource resource, bool isMobile) {
-    return Container(
-      width: isMobile ? double.infinity : 300,
-      padding: const EdgeInsets.all(AppTheme.spacingL),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => Navigator.of(context).pushReplacementNamed(resource.route),
         borderRadius: BorderRadius.circular(AppTheme.radiusL),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.3),
-          width: 1,
+        child: Container(
+          width: isMobile ? double.infinity : 300,
+          padding: const EdgeInsets.all(AppTheme.spacingL),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(AppTheme.radiusL),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.3),
+              width: 1,
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                resource.icon,
+                size: isMobile ? 40 : 48,
+                color: Colors.white,
+              ),
+              const SizedBox(height: AppTheme.spacingM),
+              Text(
+                resource.title,
+                style: AppTheme.titleLarge.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppTheme.spacingS),
+              Text(
+                resource.description,
+                style: AppTheme.bodyMedium.copyWith(
+                  color: Colors.white.withOpacity(0.8),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            resource.icon,
-            size: isMobile ? 40 : 48,
-            color: Colors.white,
-          ),
-          const SizedBox(height: AppTheme.spacingM),
-          Text(
-            resource.title,
-            style: AppTheme.titleLarge.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: AppTheme.spacingS),
-          Text(
-            resource.description,
-            style: AppTheme.bodyMedium.copyWith(
-              color: Colors.white.withOpacity(0.8),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }
