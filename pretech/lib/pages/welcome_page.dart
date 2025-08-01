@@ -89,7 +89,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(AppTheme.radiusXl),
                               child: Image.asset(
-                                'images/intro.gif',
+                                'assets/images/intro.gif',
                                 fit: BoxFit.contain,
                                 errorBuilder: (context, error, stackTrace) {
                                   // Fallback to icon if GIF fails to load

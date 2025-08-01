@@ -115,7 +115,7 @@ class IntroductionPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppTheme.radiusL),
                     child: Image.asset(
-                      'images/welcome.png',
+                      'assets/images/welcome.png',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -668,7 +668,7 @@ class IntroductionPage extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppTheme.radiusL),
                       child: Image.asset(
-                        'images/mission.gif',
+                        'assets/images/mission.gif',
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
