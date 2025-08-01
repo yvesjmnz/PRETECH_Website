@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../models/lecture_content.dart';
 import '../data/weight_management_lecture.dart';
 import '../widgets/lecture/slide_renderer.dart';
+import '../services/lecture_persistence_service.dart';
 
 /// Interactive lecture page following Single Responsibility Principle
 /// Responsibility: Manage lecture navigation and state
@@ -22,6 +23,31 @@ class _LecturePageState extends State<LecturePage> {
   void initState() {
     super.initState();
     _lecture = WeightManagementLecture.lectureContent;
+    _loadSavedProgress();
+  }
+
+  Future<void> _loadSavedProgress() async {
+    final savedSlide = await LecturePersistenceService.loadCurrentSlide();
+    if (savedSlide < _lecture.slides.length) {
+      setState(() {
+        _currentSlideIndex = savedSlide;
+      });
+      // Animate to saved slide after a brief delay
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_pageController.hasClients) {
+          _pageController.animateToPage(
+            savedSlide,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
+    }
+  }
+
+  Future<void> _saveProgress() async {
+    await LecturePersistenceService.saveCurrentSlide(_currentSlideIndex);
+    await LecturePersistenceService.markSlideCompleted(_currentSlideIndex);
   }
 
   @override
@@ -39,6 +65,7 @@ class _LecturePageState extends State<LecturePage> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+      _saveProgress();
     }
   }
 
@@ -51,6 +78,7 @@ class _LecturePageState extends State<LecturePage> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+      _saveProgress();
     }
   }
 

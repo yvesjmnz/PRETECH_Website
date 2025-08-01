@@ -106,7 +106,7 @@ class CustomHeader extends StatelessWidget implements PreferredSizeWidget {
                         if (!isMobile) ...[
                           const SizedBox(height: AppTheme.spacingXs),
                           Text(
-                            'PRETECH L81 Learning Resources',
+                            'Weigh Smarter!',
                             style: AppTheme.bodyMedium.copyWith(
                               color: Colors.white.withOpacity(0.8),
                               fontSize: 12,

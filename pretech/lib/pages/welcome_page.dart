@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../data/content_registry.dart';
 import '../widgets/navigation/global_drawer.dart';
+import '../widgets/media_placeholder_widget.dart';
 
 /// Generic welcome page following Open/Closed Principle
 /// Single Responsibility: Welcome users and navigate to available learning resources
@@ -70,23 +71,35 @@ class _WelcomePageState extends State<WelcomePage> {
                   constraints: const BoxConstraints(maxWidth: 800),
                   child: Padding(
                     padding: EdgeInsets.all(isMobile ? AppTheme.spacingL : AppTheme.spacingXxl),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Logo/Icon
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                        // Logo/GIF
                         AnimatedOpacity(
                           opacity: _showContent ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 800),
                           child: Container(
-                            padding: const EdgeInsets.all(AppTheme.spacingL),
+                            width: isMobile ? 120 : 350,
+                            height: isMobile ? 120 : 350,
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(AppTheme.radiusXl),
                             ),
-                            child: Icon(
-                              Icons.school,
-                              size: isMobile ? 60 : 80,
-                              color: Colors.white,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(AppTheme.radiusXl),
+                              child: Image.asset(
+                                'images/intro.gif',
+                                fit: BoxFit.contain,
+                                errorBuilder: (context, error, stackTrace) {
+                                  // Fallback to icon if GIF fails to load
+                                  return Icon(
+                                    Icons.school,
+                                    size: isMobile ? 60 : 80,
+                                    color: Colors.white,
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -98,7 +111,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           opacity: _showContent ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1000),
                           child: Text(
-                            'Welcome to Group 1 PRETECH L81\'s Learning Resource Site!',
+                            'Be Weigh Smarter!',
                             style: (isMobile 
                               ? AppTheme.headlineMedium 
                               : AppTheme.headlineLarge
@@ -117,7 +130,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           opacity: _showContent ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1200),
                           child: Text(
-                            'Explore our interactive learning resources designed to help improve your weight management lesson plan!',
+                            'Be way smarter by using our interactive learning resources about weight management!',
                             style: AppTheme.bodyLarge.copyWith(
                               color: Colors.white.withOpacity(0.9),
                               fontSize: isMobile ? 16 : 18,
@@ -126,34 +139,30 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                         ),
                         
-                        SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingXxl),
+                        SizedBox(height: isMobile ? AppTheme.spacingXl : AppTheme.spacingS),
                         
-                        // Available Resources Section
+                        // Simplified welcome message
                         AnimatedOpacity(
                           opacity: _showContent ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 1400),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Available Learning Resources',
-                                style: AppTheme.titleLarge.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center,
+                          child: Container(
+                            padding: const EdgeInsets.all(AppTheme.spacingL),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(AppTheme.radiusL),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1,
                               ),
-                              const SizedBox(height: AppTheme.spacingL),
-                              
-                              // Resource Cards
-                              Wrap(
-                                spacing: AppTheme.spacingM,
-                                runSpacing: AppTheme.spacingM,
-                                alignment: WrapAlignment.center,
-                                children: availableResources.map((resource) => 
-                                  _buildResourceCard(resource, isMobile)
-                                ).toList(),
+                            ),
+                            child: Text(
+                              'Your comprehensive guide to evidence-based weight management and healthy living.',
+                              style: AppTheme.bodyLarge.copyWith(
+                                color: Colors.white.withOpacity(0.9),
+                                fontWeight: FontWeight.w500,
                               ),
-                            ],
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                         
@@ -206,6 +215,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
                 ),
+              ),
               ),
               
               // Menu button in top-left

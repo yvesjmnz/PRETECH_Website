@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 class ConceptMapPage extends StatefulWidget {
   const ConceptMapPage({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
         final isMobile = constraints.maxWidth < 600;
         
         return Scaffold(
-          backgroundColor: const Color(0xFFF8FFFE),
+          backgroundColor: AppTheme.surfaceColor,
           body: Stack(
             children: [
               // Main Content
@@ -101,13 +102,13 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
   Widget _buildHeader(bool isMobile) {
     return Container(
       padding: EdgeInsets.all(isMobile ? 16 : 24),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: AppTheme.cardColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 4,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -132,17 +133,15 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
               children: [
                 Text(
                   'Interactive Concept Map',
-                  style: TextStyle(
-                    fontSize: isMobile ? 18 : 22,
+                  style: (isMobile ? AppTheme.titleLarge : AppTheme.headlineSmall).copyWith(
+                    color: AppTheme.pageColorSchemes[0].primary,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF00BFAE),
                   ),
                 ),
                 Text(
                   'Our weight management 101 learning resources are all grounded on this concept map!',
-                  style: TextStyle(
-                    fontSize: isMobile ? 12 : 14,
-                    color: Colors.grey[600],
+                  style: AppTheme.bodyMedium.copyWith(
+                    color: AppTheme.textSecondary,
                   ),
                 ),
               ],
@@ -270,13 +269,13 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
   Widget _buildBottomInfo(bool isMobile) {
     return Container(
       padding: EdgeInsets.all(isMobile ? 16 : 20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: AppTheme.cardColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 4,
-            offset: Offset(0, -2),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -291,9 +290,8 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
           Expanded(
             child: Text(
               'Explore the connections between nutrition, exercise, and health',
-              style: TextStyle(
-                fontSize: isMobile ? 13 : 14,
-                color: Colors.grey[700],
+              style: AppTheme.bodyMedium.copyWith(
+                color: AppTheme.textSecondary,
               ),
             ),
           ),
@@ -315,11 +313,11 @@ class _ConceptMapPageState extends State<ConceptMapPage> with TickerProviderStat
               opacity: _controlsAnimation.value,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppTheme.cardColor,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withOpacity(0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),

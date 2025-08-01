@@ -4,21 +4,108 @@ import 'package:flutter/material.dart';
 /// Responsibility: Manage available learning resources
 class ContentRegistry {
   static const List<LearningResource> _resources = [
+    // Introduction Page
+    LearningResource(
+      id: 'introduction',
+      title: 'Introduction',
+      description: 'Introduction to Weight Management',
+      icon: Icons.info_outline,
+      route: '/introduction',
+    ),
+    
+    // Concept Map
     LearningResource(
       id: 'concept-map',
-      title: 'Interactive Concept Map',
-      description: 'Explore the interconnected factors that influence healthy weight management',
+      title: 'Concept Map',
+      description: 'Interactive concept mapping',
       icon: Icons.hub,
       route: '/concept-map',
     ),
+    
+    // Lesson 1 Section
     LearningResource(
-      id: 'lecture-quiz',
-      title: 'Weight Management Lecture & Quiz',
-      description: 'Interactive presentation with engaging activities and knowledge checks',
+      id: 'lesson1',
+      title: 'Lesson 1',
+      description: 'Weight Management Fundamentals',
       icon: Icons.school,
-      route: '/lecture',
+      route: '/materials',
+      isSection: true,
     ),
-    // Future resources can be added here without modifying existing code
+    LearningResource(
+      id: 'lesson1-module',
+      title: 'Module',
+      description: 'Learning materials and resources',
+      icon: Icons.folder,
+      route: '/materials',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson1-video',
+      title: 'Video Lecture',
+      description: 'Educational video content',
+      icon: Icons.play_circle,
+      route: '/video-lecture',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson1-assessment',
+      title: 'Assessment',
+      description: 'Weight management lecture quiz',
+      icon: Icons.assignment,
+      route: '/lecture',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson1-poster',
+      title: 'Poster',
+      description: 'Download educational poster samples',
+      icon: Icons.image,
+      route: '/poster-making',
+      isSubItem: true,
+    ),
+    
+    // Lesson 2 Section
+    LearningResource(
+      id: 'lesson2',
+      title: 'Lesson 2',
+      description: 'Advanced Weight Management',
+      icon: Icons.school,
+      route: '/materials',
+      isSection: true,
+    ),
+    LearningResource(
+      id: 'lesson2-module',
+      title: 'Module',
+      description: 'Advanced learning materials',
+      icon: Icons.folder,
+      route: '/materials',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson2-video',
+      title: 'Video Lecture',
+      description: 'Advanced educational content',
+      icon: Icons.play_circle,
+      route: '/video-lecture-advanced',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson2-assessment',
+      title: 'Assessment',
+      description: 'Advanced weight management quiz',
+      icon: Icons.assignment,
+      route: '/lecture',
+      isSubItem: true,
+    ),
+    
+    // About Us
+    LearningResource(
+      id: 'about',
+      title: 'About Us',
+      description: 'Learn more about our mission',
+      icon: Icons.people,
+      route: '/about',
+    ),
   ];
   
   /// Get all available learning resources
@@ -38,6 +125,8 @@ class LearningResource {
   final String description;
   final IconData icon;
   final String route;
+  final bool isSection;
+  final bool isSubItem;
   
   const LearningResource({
     required this.id,
@@ -45,5 +134,7 @@ class LearningResource {
     required this.description,
     required this.icon,
     required this.route,
+    this.isSection = false,
+    this.isSubItem = false,
   });
 }
