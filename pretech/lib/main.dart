@@ -9,6 +9,7 @@ import 'pages/poster_making_page.dart';
 import 'pages/about_page.dart';
 import 'pages/video_lecture_page.dart';
 import 'pages/video_page.dart';
+import 'pages/lesson1_module_page.dart';
 import 'widgets/custom_header.dart';
 import 'widgets/navigation/global_drawer.dart';
 
@@ -113,7 +114,7 @@ class LectureView extends StatelessWidget {
 }
 
 /// Materials view with global navigation
-/// Single Responsibility: Display materials placeholder with navigation
+/// Single Responsibility: Display Lesson 1 module content with navigation
 class MaterialsView extends StatelessWidget {
   const MaterialsView({super.key});
 
@@ -121,20 +122,15 @@ class MaterialsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomHeader(
-        title: 'Learning Materials',
-        icon: Icons.folder,
+        title: 'Lesson 1: Weight Management Module',
+        icon: Icons.school,
         colorScheme: AppTheme.pageColorSchemes[1], // Using yellow/gold
         currentRoute: '/materials',
       ),
       drawer: const GlobalDrawer(currentRoute: '/materials'),
       body: Container(
         color: AppTheme.surfaceColor,
-        child: ModulePlaceholderPage(
-          moduleTitle: 'Learning Materials',
-          moduleDescription: 'Comprehensive educational resources for weight management',
-          moduleIcon: Icons.folder,
-          colorScheme: AppTheme.pageColorSchemes[1],
-        ),
+        child: const Lesson1ModulePage(),
       ),
     );
   }

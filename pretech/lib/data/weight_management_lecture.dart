@@ -134,10 +134,10 @@ class WeightManagementLecture {
         title: 'Activity Classification',
         instructions: 'Place each activity in the correct quadrant based on intensity and type:',
         items: [
-          GridItem(name: 'Aerobic Activities', correctQuadrant: 4), // High Intensity, Cardio
+          GridItem(name: 'Aerobic Activities', correctQuadrant: 3), // High Intensity, Cardio
           GridItem(name: 'HIIT', correctQuadrant: 1), // High Intensity, Cardio/Strength
-          GridItem(name: 'Strength/Resistance Training', correctQuadrant: 1), // High Intensity, Strength
-          GridItem(name: 'Walking', correctQuadrant: 3), // Low Intensity, Cardio
+          GridItem(name: 'Strength/Resistance Training', correctQuadrant: 4), // High Intensity, Strength
+          GridItem(name: 'Walking', correctQuadrant: 2), // Low Intensity, Cardio
         ],
         xAxisLabel: 'Intensity',
         yAxisLabel: 'Type',
