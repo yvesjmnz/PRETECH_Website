@@ -11,7 +11,7 @@ class VideoLecturePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Example YouTube video ID - replace with actual educational content
     // This is a placeholder - you can change this to any YouTube video ID
-    const videoId = 'dQw4w9WgXcQ'; // Replace with actual educational video
+    const videoId = 'F94IY408Q4E'; // Replace with actual educational video
     
     return VideoPage(
       videoId: videoId,
