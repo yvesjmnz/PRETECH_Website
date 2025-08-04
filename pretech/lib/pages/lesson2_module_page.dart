@@ -165,7 +165,7 @@ class Lesson2ModulePage extends StatelessWidget {
       children: [
         // Nutrition Concept Image
         _buildResponsiveImage(
-          'images/lesson2image1.gif',
+          'assets/images/lesson2image1.gif',
           'Nutrition Concept',
           mobileHeight: 200,
         ),
@@ -189,7 +189,7 @@ class Lesson2ModulePage extends StatelessWidget {
       children: [
         // Pinggang Pinoy Image
         _buildResponsiveImage(
-          'images/lesson2image2.gif',
+          'assets/images/lesson2image2.gif',
           'Pinggang Pinoy Guide',
           mobileHeight: 220,
         ),
@@ -453,7 +453,7 @@ class Lesson2ModulePage extends StatelessWidget {
       children: [
         // Water and Hydration Image
         _buildResponsiveImage(
-          'images/lesson2image3.gif',
+          'assets/images/lesson2image3.gif',
           'Water and Hydration',
           mobileHeight: 180,
         ),
