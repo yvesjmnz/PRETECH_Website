@@ -78,7 +78,7 @@ class ContentRegistry {
       title: 'Module',
       description: 'Advanced learning materials',
       icon: Icons.folder,
-      route: '/materials',
+      route: '/lesson2-module',
       isSubItem: true,
     ),
     LearningResource(
@@ -94,7 +94,7 @@ class ContentRegistry {
       title: 'Assessment',
       description: 'Advanced weight management quiz',
       icon: Icons.assignment,
-      route: '/lecture',
+      route: '/lesson2-assessment',
       isSubItem: true,
     ),
     

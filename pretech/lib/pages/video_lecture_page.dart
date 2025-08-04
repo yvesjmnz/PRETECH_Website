@@ -15,8 +15,8 @@ class VideoLecturePage extends StatelessWidget {
     
     return VideoPage(
       videoId: videoId,
-      title: 'Weight Management Fundamentals',
-      description: 'Comprehensive video lecture covering the essential principles of healthy weight management, including nutrition basics, physical activity guidelines, and sustainable lifestyle changes.',
+      title: 'Weight Loss Myths',
+      description: 'A resource video about weight loss myths by Insider Science going over some of the most common misconceptions about weight loss and healthy eating.',
       colorScheme: AppTheme.pageColorSchemes[1], // Yellow/gold theme
     );
   }
@@ -29,12 +29,12 @@ class AdvancedVideoLecturePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Example YouTube video ID for advanced content
-    const videoId = 'dQw4w9WgXcQ'; // Replace with actual advanced educational video
+    const videoId = '5-LAKQGhKzo'; // Replace with actual advanced educational video
     
     return VideoPage(
       videoId: videoId,
-      title: 'Advanced Weight Management Strategies',
-      description: 'Advanced techniques and strategies for long-term weight management success, including behavior modification, meal planning, and overcoming common challenges.',
+      title: 'Nutrition and Pinggang Pinoy',
+      description: 'A short video lecture made by the group about nutrition and Pinggang Pinoy, a Filipino food guide that promotes balanced meals.',
       colorScheme: AppTheme.pageColorSchemes[2], // Red theme
     );
   }

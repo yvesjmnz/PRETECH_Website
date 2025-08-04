@@ -10,6 +10,8 @@ import 'pages/about_page.dart';
 import 'pages/video_lecture_page.dart';
 import 'pages/video_page.dart';
 import 'pages/lesson1_module_page.dart';
+import 'pages/lesson2_module_page.dart';
+import 'pages/lesson2_assessment_page.dart';
 import 'widgets/custom_header.dart';
 import 'widgets/navigation/global_drawer.dart';
 
@@ -34,6 +36,8 @@ class WeightManagementApp extends StatelessWidget {
         '/concept-map': (context) => const ConceptMapView(),
         '/lecture': (context) => const LectureView(),
         '/materials': (context) => const MaterialsView(),
+        '/lesson2-module': (context) => const Lesson2ModuleView(),
+        '/lesson2-assessment': (context) => const Lesson2AssessmentView(),
         '/video-lecture': (context) => const VideoLectureView(),
         '/video-lecture-advanced': (context) => const AdvancedVideoLectureView(),
         '/poster-making': (context) => const PosterMakingView(),
@@ -136,6 +140,52 @@ class MaterialsView extends StatelessWidget {
   }
 }
 
+/// Lesson 2 Module view with global navigation
+/// Single Responsibility: Display Lesson 2 module content with navigation
+class Lesson2ModuleView extends StatelessWidget {
+  const Lesson2ModuleView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomHeader(
+        title: 'Lesson 2: Nutrition and Pinggang Pinoy',
+        icon: Icons.restaurant,
+        colorScheme: AppTheme.pageColorSchemes[2], // Using red
+        currentRoute: '/lesson2-module',
+      ),
+      drawer: const GlobalDrawer(currentRoute: '/lesson2-module'),
+      body: Container(
+        color: AppTheme.surfaceColor,
+        child: const Lesson2ModulePage(),
+      ),
+    );
+  }
+}
+
+/// Lesson 2 Assessment view with global navigation
+/// Single Responsibility: Display Lesson 2 assessment with navigation
+class Lesson2AssessmentView extends StatelessWidget {
+  const Lesson2AssessmentView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomHeader(
+        title: 'Lesson 2: Nutrition Assessment',
+        icon: Icons.assignment,
+        colorScheme: AppTheme.pageColorSchemes[2], // Using red
+        currentRoute: '/lesson2-assessment',
+      ),
+      drawer: const GlobalDrawer(currentRoute: '/lesson2-assessment'),
+      body: Container(
+        color: AppTheme.surfaceColor,
+        child: const Lesson2AssessmentPage(),
+      ),
+    );
+  }
+}
+
 /// Poster making view with global navigation
 /// Single Responsibility: Display poster making content with navigation
 class PosterMakingView extends StatelessWidget {
@@ -191,7 +241,7 @@ class AdvancedVideoLectureView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomHeader(
-        title: 'Advanced Weight Management',
+        title: 'Nutrition and Pinggang Pinoy',
         icon: Icons.play_circle,
         colorScheme: AppTheme.pageColorSchemes[2], // Using red
         currentRoute: '/video-lecture-advanced',
