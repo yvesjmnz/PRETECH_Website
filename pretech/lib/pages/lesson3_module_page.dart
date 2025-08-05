@@ -165,7 +165,7 @@ class Lesson3ModulePage extends StatelessWidget {
       children: [
         // Introduction Image
         _buildResponsiveImage(
-          'assets/images/lesson3image1.gif',
+          'assets/images/lesson3image1.jpg',
           'Physical Activity Introduction',
           mobileHeight: 200,
         ),
