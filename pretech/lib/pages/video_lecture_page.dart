@@ -40,6 +40,24 @@ class AdvancedVideoLecturePage extends StatelessWidget {
   }
 }
 
+/// Lesson 3 video lecture page for physical activities
+class Lesson3VideoLecturePage extends StatelessWidget {
+  const Lesson3VideoLecturePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // YouTube video ID for Lesson 3 content about physical activities
+    const videoId = 'ep9j7YaTfMg'; // Weight management mechanisms video
+    
+    return VideoPage(
+      videoId: videoId,
+      title: 'How Does Exercise Impact Weight Loss?',
+      description: 'Educational video explaining how the body processes weight management and the role of physical activities in metabolism and calorie expenditure.',
+      colorScheme: AppTheme.pageColorSchemes[3], // Green theme for Lesson 3
+    );
+  }
+}
+
 /// Factory class for creating video pages with different content
 /// Single Responsibility: Provide easy video page creation
 class VideoLectureFactory {
@@ -82,5 +100,18 @@ class VideoLectureFactory {
       );
     }
     return const AdvancedVideoLecturePage();
+  }
+  
+  /// Create Lesson 3 video lecture
+  static Widget lesson3({String? youtubeUrl}) {
+    if (youtubeUrl != null) {
+      return fromYouTubeUrl(
+        youtubeUrl: youtubeUrl,
+        title: 'Physical Activities for Weight Management',
+        description: 'Educational video explaining how the body processes weight management and the role of physical activities in metabolism and calorie expenditure.',
+        colorScheme: AppTheme.pageColorSchemes[3],
+      );
+    }
+    return const Lesson3VideoLecturePage();
   }
 }

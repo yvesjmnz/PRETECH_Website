@@ -98,6 +98,40 @@ class ContentRegistry {
       isSubItem: true,
     ),
     
+    // Lesson 3 Section
+    LearningResource(
+      id: 'lesson3',
+      title: 'Lesson 3',
+      description: 'Physical Activities for Weight Management',
+      icon: Icons.school,
+      route: '/materials',
+      isSection: true,
+    ),
+    LearningResource(
+      id: 'lesson3-module',
+      title: 'Module',
+      description: 'Physical activities and exercise materials',
+      icon: Icons.folder,
+      route: '/lesson3-module',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson3-video',
+      title: 'Video Lecture',
+      description: 'Physical activities educational content',
+      icon: Icons.play_circle,
+      route: '/video-lecture-lesson3',
+      isSubItem: true,
+    ),
+    LearningResource(
+      id: 'lesson3-assessment',
+      title: 'Assessment',
+      description: 'Physical activities quiz',
+      icon: Icons.assignment,
+      route: '/lesson3-lecture',
+      isSubItem: true,
+    ),
+    
     // About Us
     LearningResource(
       id: 'about',
