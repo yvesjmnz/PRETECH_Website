@@ -781,14 +781,14 @@ class IntroductionPage extends StatelessWidget {
             'description': 'Advanced Weight Management',
             'icon': Icons.school,
             'colorScheme': AppTheme.pageColorSchemes[2], // Red
-            'route': '/materials',
+            'route': '/lesson2-module',
           },
           {
             'title': 'Lesson 3',
             'description': 'Lifestyle Integration',
             'icon': Icons.school,
             'colorScheme': AppTheme.pageColorSchemes[3], // Green
-            'route': '/materials',
+            'route': '/lesson3-module',
           },
         ];
         

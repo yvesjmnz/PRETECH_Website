@@ -435,12 +435,12 @@ class Lesson3ModulePage extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.spacingL),
             
-            // Activities Image
-            _buildResponsiveImage(
-              'assets/images/lesson3image2.jpg',
-              'Types of Physical Activities',
-              mobileHeight: 180,
-            ),
+            // // Activities Image
+            // _buildResponsiveImage(
+            //   'assets/images/lesson3image2.jpg',
+            //   'Types of Physical Activities',
+            //   mobileHeight: 180,
+            // ),
             const SizedBox(height: AppTheme.spacingL),
             
             // Aerobic Activities
